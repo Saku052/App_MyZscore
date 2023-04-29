@@ -12,6 +12,30 @@ using Unity.Services.Core;
 using Unity.Services.Authentication;
 using Unity.Services.CloudSave;
 
+
+public class Data   // Data class
+{
+    public string SetKey {get; set;}
+    public string data {get; set;}
+    public string date {get; set;}
+    public string comment {get; set;}
+    public int before {get; set;}
+
+    public Data(){}   // Constructor when pulling data from the cloud
+
+    public Data(string data, string date, string comment)   // Constructor when adding new data
+    {
+        this.data = data;
+        this.date = date;
+        this.comment = comment;
+
+        DataContoller.PushData(this);
+    }
+}
+
+
+
+
 // push and pull data from the cloud
 public static class DataContoller
 {
@@ -90,7 +114,7 @@ public static class DataContoller
             var pushdata = new Dictionary<string, object>{ { DataList.keyarr[inext], DataList.Datalist[DataList.keyarr[inext]] } };
             await CloudSaveService.Instance.Data.ForceSaveAsync(pushdata);
 
-        }catch(IndexOutOfRangeException){
+        }catch(ArgumentOutOfRangeException){
             
             // if the data is the last data, do nothing
             Debug.Log("Index is out of range");
@@ -140,19 +164,21 @@ public static class DataList
 
     public static void AddData(Data data)
     {
+        const int INITIAL_INDEX = 0;
+        const int LAST_INDEX = 4;
+
         // if the list is full, remove the oldest data
         if(DataList.Datalist.Count > 4)
         {
-            DataList.Datalist.Remove(DataList.keyarr[0]);
+            DataList.Datalist.Remove(DataList.keyarr[INITIAL_INDEX]);
 
             for(int i = 0; i < DataList.keyarr.Count - 1; i++)
             {
                 DataList.keyarr[i] = DataList.keyarr[i + 1];
             }
             
-            DataList.keyarr[4] = data.SetKey;
+            DataList.keyarr[LAST_INDEX] = data.SetKey;
         }
-        
         
         DataList.Datalist.Add(data.SetKey, data);
     }
@@ -181,24 +207,3 @@ public static class DataList
         return keyarr;
     }
 }
-
-public class Data   // Data class
-{
-    public string SetKey {get; set;}
-    public string data {get; set;}
-    public string date {get; set;}
-    public string comment {get; set;}
-    public int before {get; set;}
-
-    public Data(){}   // Default constructor
-
-    public Data(string data, string date, string comment)   // Set data and push 
-    {
-        this.data = data;
-        this.date = date;
-        this.comment = comment;
-
-        DataContoller.PushData(this);
-    }
-}
-

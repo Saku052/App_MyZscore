@@ -2872,6 +2872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c64a217ad11574ba6eb999eca836d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventSystem: {fileID: 626818530}
   dataPrefab: {fileID: 9122481875594472446, guid: 51b1c0b362869004bb24f9ecf9a4c2a0, type: 3}
   newData: {fileID: 1548026713951249051, guid: bffb31c2f34f5db47a4e2372214e3dba, type: 3}
   dataParent: {fileID: 427996259}
