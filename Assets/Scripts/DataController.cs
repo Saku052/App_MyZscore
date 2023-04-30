@@ -129,7 +129,6 @@ public static class DataContoller
         // Delete data on cloud 
         await CloudSaveService.Instance.Data.ForceDeleteAsync(key);
 
-        
         try{
             // Pull previous data
             var query =  await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { DataList.Datalist[DataList.keyarr[0]].before.ToString() });
@@ -141,13 +140,13 @@ public static class DataContoller
             // Add data key to keyarr
             DataList.keyarr.Insert(0, data.SetKey);
 
-            // push key to arr
-            var pushkey = new Dictionary<string, object>{ { "key", DataList.DataKeys() } };
-            await CloudSaveService.Instance.Data.ForceSaveAsync(pushkey);
-
         }catch(KeyNotFoundException){
             Debug.Log("No data");
         }
+
+        // push key to arr
+        var pushkey = new Dictionary<string, object>{ { "key", DataList.DataKeys() } };
+        await CloudSaveService.Instance.Data.ForceSaveAsync(pushkey);
     }
 
 }
