@@ -39,7 +39,7 @@ public class DisplayData : MonoBehaviour
         Instantiate(newData, dataParent);
     }
 
-    public async void DeleteData()
+    public async void DeleteData()  // Delete data when button pressed
     {
         // Get pressed button object
         eventSystem=EventSystem.current;
@@ -56,6 +56,11 @@ public class DisplayData : MonoBehaviour
         DisplayDataList();
 
         Debug.Log("Data deleted");
+    }
+
+    public void DropSeconds(int value)
+    {
+        // Action
     }
 
 }
