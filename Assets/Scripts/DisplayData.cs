@@ -16,7 +16,7 @@ public class DisplayData : MonoBehaviour
     private async void Start()  // sign in and pull data as the app opens
     {
         // Initialize the cloud save service and pull data
-        await Task.WhenAll(DataContoller.signIn());
+        await Task.WhenAll(DataContoller.signIn(), AddingData.instance.setDropDown());
         await Task.WhenAll(DataContoller.PullData());
 
         // Display the data pulled
@@ -57,10 +57,4 @@ public class DisplayData : MonoBehaviour
 
         Debug.Log("Data deleted");
     }
-
-    public void DropSeconds(int value)
-    {
-        // Action
-    }
-
 }
