@@ -1189,9 +1189,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1978506234}
-        m_TargetAssemblyTypeName: Test, Assembly-CSharp
-        m_MethodName: PushData
+      - m_Target: {fileID: 1978506236}
+        m_TargetAssemblyTypeName: AddingData, Assembly-CSharp
+        m_MethodName: OpenDataPanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5226,6 +5226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dropSeconds: {fileID: 1556710858}
   dropMinutes: {fileID: 1668558350}
+  addDataPanel: {fileID: 1507530628}
 --- !u!1 &1993135135
 GameObject:
   m_ObjectHideFlags: 0
