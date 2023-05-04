@@ -13,6 +13,9 @@ public class DisplayData : MonoBehaviour
     [SerializeField] private GameObject newData;    // GameObject for adding new data
     [SerializeField] private Transform dataParent;  // parent of the data
 
+    // make an instance of this class
+    public static DisplayData instance;
+
     private async void Start()  // sign in and pull data as the app opens
     {
         // Initialize the cloud save service and pull data
@@ -23,8 +26,12 @@ public class DisplayData : MonoBehaviour
         DisplayDataList();
     }
 
-    private void DisplayDataList()  // Display the data pulled
-    {
+    public void DisplayDataList()  // Display the data pulled
+    {   
+        // delete all data displayed
+        foreach(Transform child in dataParent)
+            Destroy(child.gameObject);
+
         // Display the data
         for(int i = DataList.keyarr.Count - 1; i > -1; i--)
         {
@@ -56,5 +63,11 @@ public class DisplayData : MonoBehaviour
         DisplayDataList();
 
         Debug.Log("Data deleted");
+    }
+
+
+    private void Awake() {
+        if(instance == null)    instance = this;
+        else                    Destroy(gameObject);
     }
 }

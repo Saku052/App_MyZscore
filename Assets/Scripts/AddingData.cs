@@ -19,6 +19,9 @@ public void UploadData()
 
     // Upload the data
     new Data(data, "2022/01/01", "UploadDataのデータ");
+    
+    //Display the data again
+    DisplayData.instance.DisplayDataList();
 
     Debug.Log("Data uploaded");
 }
