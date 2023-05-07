@@ -2,20 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+
+// Gaming Service Name Space
+using Unity.Services.Core;
+using Unity.Services.Authentication;
+using Unity.Services.CloudSave;
 
 public static class DataCalculator
 {
     
-    public static Task PullMetaData()
+    public async static Task PullMetaData()
     {
         // Pull data info from cloud
         try{
-
+            // Pull Key data from the cloud
+            var datainfo =  await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { "DataInfo" });
+            // Add the data to the DataList
+            var data = datainfo["DataInfo"];
+            new DataInfo(JsonConvert.DeserializeObject<DataInfo>(data));
+            
             // get data count and data mean
             
             // DataInfo(data.mean, data.count);
             
-            return Task.CompletedTask;
         }catch
         {
 
@@ -23,13 +33,13 @@ public static class DataCalculator
         }
         // when there is no data in the cloud
 
-        return Task.CompletedTask;
     }
 
-    public static Task PushMetadata()
+    public async static Task PushMetadata(DataInfo data)
     {
-        // push count and mean to the cloud
-        return Task.CompletedTask;
+        // push data info to the cloud
+        var pushdata = new Dictionary<string, object>{ { "DataInfo", data } };
+        await CloudSaveService.Instance.Data.ForceSaveAsync(pushdata);
     }
 }
 
@@ -40,6 +50,14 @@ public class DataInfo
     public float sd;
 
     // recive mean and count data each time the app opens
+
+    public DataInfo(DataInfo datainfo)
+    {
+        this.mean = datainfo.mean;
+        this.count = datainfo.count;
+        this.sd = datainfo.sd;
+    }
+    
     public DataInfo(float mean, int count)
     {
         this.mean = mean;
