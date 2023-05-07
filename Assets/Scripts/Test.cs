@@ -14,8 +14,7 @@ public class Test : MonoBehaviour
     
     public void PushData()
     {
-        Data data = new Data("00分00秒", "2020/01/01", "push(this)のデータ");
-        
+    new DataInfo(20, 5);
     }
 
     public async void Deldata()
