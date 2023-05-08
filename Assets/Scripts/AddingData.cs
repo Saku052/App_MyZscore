@@ -93,7 +93,7 @@ public class AddingData : MonoBehaviour
     }
 
 
-    private void Awake()    // Set instance of this class
+private void Awake()    // Set instance of this class
     {
         if(instance == null)    instance = this;
         else                    Destroy(gameObject);
