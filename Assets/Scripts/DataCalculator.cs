@@ -45,6 +45,7 @@ public static class DataCalculator
     }
 }
 
+
 public class DataInfo
 {
     public int count {get; set;}
@@ -60,27 +61,28 @@ public class DataInfo
         this.sd = datainfo.sd;
     }
     
-    public DataInfo(float mean, int count)
+    public DataInfo(float mean, int count, float sd)
     {
         this.mean = mean;
         this.count = count;
+        this.sd = sd;
 
         // just testing if it works
-        calculateSD(mean, count);  
-
-        getsd();
+        calculateSD(mean);  
     }
 
-    private void getsd()
+    private void getsd(float newmean, float datavalue)
     {
         // calculate the sd
         if(count < 6)   // when there is less than 6 data
         {
             // calculate sd normally
+            calculateSD(newmean);
         }
         else            // when there is more than 5 data
         {
             // calculate sd with a special formula
+            calculateSDSP(newmean, datavalue);
         }
     }
     
@@ -89,19 +91,20 @@ public class DataInfo
     {
         // add count
         this.count++;
+        float newmean;
 
         // calculate the new mean
         float datavalue = getseconds(data.data);
-        this.mean = (mean * (count - 1) + datavalue) / count;
+        newmean = (mean * (count - 1) + datavalue) / count;
 
         // calculate the new sd through DataInfo constructor
-        getsd();
+        getsd(newmean, datavalue);
 
         // push the new data to the cloud
         
     }
 
-    private void calculateSD(float mean, int count) // calculate the sd
+    private void calculateSD(float mean) // calculate the sd
     {
         // calculate the mean squared error
         float MSR = 0;       
@@ -111,11 +114,25 @@ public class DataInfo
         }
 
         // calculate the sd
-        MSR /= count; 
+        MSR /= this.count; 
         // take the square root of the mean squared error
         sd = (float) Mathf.Sqrt(MSR);
     }
 
+    private void calculateSDSP(float newmean, float datavalue)
+    {
+        // the difference between the new mean and the old mean
+        float difference = Mathf.Abs(newmean - this.mean) + 1;
+
+        // calculate the ratio of count
+        float ratio = ((float)this.count-1) / this.count;
+
+        // calculate the new data's mean squared error
+        float newMSR = Mathf.Pow((datavalue - newmean), 2) / this.count;
+
+        // calculate the new sd
+        this.sd = Mathf.Sqrt((ratio * difference * Mathf.Pow(this.sd, 2)) + newMSR);
+    }
 
     private float getseconds(string data) // convert the data to seconds
     {

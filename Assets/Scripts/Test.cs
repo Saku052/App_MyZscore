@@ -14,7 +14,7 @@ public class Test : MonoBehaviour
     
     public void PushData()
     {
-    new DataInfo(20, 5);
+    new DataInfo(20, 5, 10);
     }
 
     public async void Deldata()
