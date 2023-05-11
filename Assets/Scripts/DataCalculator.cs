@@ -17,32 +17,46 @@ public static class DataCalculator
     public async static Task PullMetaData()
     {
         // Pull data info from cloud
-        try{
-            // Pull Key data from the cloud
+        
+            
             var datainfo =  await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { "DataInfo" });
-            // Add the data to the DataList
             var data = datainfo["DataInfo"];
-            metadata = new DataInfo(JsonConvert.DeserializeObject<DataInfo>(data));
-            // get data count and data mean
-            
-            // DataInfo(data.mean, data.count);
-            
-        }catch
-        {
 
-            Debug.Log("No data in the cloud");
-        }
+            Debug.Log("Pulling data from the cloud");
+
+            metadata = new DataInfo(JsonConvert.DeserializeObject<DataInfo>(data));
+            Debug.Log("Pulling data from the cloud");
         // when there is no data in the cloud
 
     }
 
     public async static Task PushMetadata(Data data)
     {
+        if(metadata == null)
+        {
+            // when there is no data in the cloud
+            metadata = new DataInfo(getseconds(data.data), 1, 1);
+        }
+        Debug.Log("Pushing data to the cloud");
         metadata.addData(data);
+        Debug.Log("Pushing data to the cloud2");     
         // push data info to the cloud
         var pushdata = new Dictionary<string, object>{ { "DataInfo", metadata } };
         await CloudSaveService.Instance.Data.ForceSaveAsync(pushdata);
     }
+
+    private static float getseconds(string data) // convert the data to seconds
+    {
+        // split the data into minutes, and seconds
+        string[] split = data.Split('分');
+        split[1] = split[1].Remove(split[1].Length - 1, 1);
+
+        // convert to seconds
+        float seconds = float.Parse(split[0]) * 60 + float.Parse(split[1]);
+
+        return seconds;
+    }
+
 }
 
 
@@ -52,8 +66,10 @@ public class DataInfo
     public float mean {get; set;}
     public float sd {get; set;}
 
-    // recive mean and count data each time the app opens
+    // constructor when pulling data from the cloud
+    public DataInfo(){}
 
+    // recive mean and count data each time the app opens
     public DataInfo(DataInfo datainfo)
     {
         this.mean = datainfo.mean;
@@ -89,6 +105,7 @@ public class DataInfo
     // when adding new data
     public void addData(Data data)
     {
+        Debug.Log("Adding data");
         // add count
         this.count++;
         float newmean;
@@ -116,7 +133,7 @@ public class DataInfo
         // calculate the sd
         MSR /= this.count; 
         // take the square root of the mean squared error
-        sd = (float) Mathf.Sqrt(MSR);
+        this.sd = (float) Mathf.Sqrt(MSR);
     }
 
     private void calculateSDSP(float newmean, float datavalue)
@@ -132,6 +149,8 @@ public class DataInfo
 
         // calculate the new sd
         this.sd = Mathf.Sqrt((ratio * difference * Mathf.Pow(this.sd, 2)) + newMSR);
+        // update the mean
+        this.mean = newmean;
     }
 
     private float getseconds(string data) // convert the data to seconds

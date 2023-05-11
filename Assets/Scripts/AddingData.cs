@@ -51,7 +51,11 @@ public class AddingData : MonoBehaviour
                         dropSeconds.options[dropSeconds.value].text + "秒";
 
         // Upload the data
-        new Data(data, Today, inputComment.text);
+        Task.WhenAll(
+            DataCalculator.PushMetadata(
+                new Data(data, Today, inputComment.text)
+                )
+        );
         
         //Display the data again
         DisplayData.instance.DisplayDataList();

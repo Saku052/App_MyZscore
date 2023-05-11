@@ -23,7 +23,8 @@ public class DisplayData : MonoBehaviour
             AddingData.instance.setDropDown(), 
             AddingData.instance.CloseDataPanel());
 
-        await Task.WhenAll(DataContoller.PullData());
+        await Task.WhenAll(DataContoller.PullData(),
+            DataCalculator.PullMetaData());
 
         // Display the data pulled
         DisplayDataList();
