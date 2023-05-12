@@ -36,18 +36,22 @@ public class DisplayData : MonoBehaviour
         foreach(Transform child in dataParent)
             Destroy(child.gameObject);
 
-        // Display the data
-        for(int i = DataList.keyarr.Count - 1; i > -1; i--)
-        {
-            GameObject data = Instantiate(dataPrefab, dataParent);
-            data.transform.Find("DataComment").GetComponent<Text>().text = DataList.Datalist[DataList.keyarr[i]].comment;
-            data.transform.Find("DataValue").GetComponent<Text>().text = DataList.Datalist[DataList.keyarr[i]].data;
-            data.transform.Find("DataDelBut").GetComponent<Button>().onClick.AddListener(() => DeleteData());
-            data.transform.name = DataList.keyarr[i];
+        // Display the data if the data exist
+        try{
+            for(int i = DataList.keyarr.Count - 1; i > -1; i--){
+                GameObject data = Instantiate(dataPrefab, dataParent);
+                data.transform.Find("DataComment").GetComponent<Text>().text = DataList.Datalist[DataList.keyarr[i]].comment;
+                data.transform.Find("DataValue").GetComponent<Text>().text = DataList.Datalist[DataList.keyarr[i]].data;
+                data.transform.Find("DataDelBut").GetComponent<Button>().onClick.AddListener(() => DeleteData());
+                data.transform.name = DataList.keyarr[i];
+            }
+        }catch(System.NullReferenceException){
+            Debug.Log("No data");
         }
 
         // Display GameObject for adding new data at the end
-        Instantiate(newData, dataParent);
+        GameObject addingData = Instantiate(newData, dataParent);
+        addingData.GetComponent<Button>().onClick.AddListener(() => AddingData.instance.OpenDataPanel());
     }
 
     public async void DeleteData()  // Delete data when button pressed

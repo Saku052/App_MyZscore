@@ -18,7 +18,7 @@ public static class DataCalculator
     {
         // Pull data info from cloud
         
-            
+        try{   
             var datainfo =  await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { "DataInfo" });
             var data = datainfo["DataInfo"];
 
@@ -26,6 +26,11 @@ public static class DataCalculator
 
             metadata = new DataInfo(JsonConvert.DeserializeObject<DataInfo>(data));
             Debug.Log("Pulling data from the cloud");
+        }
+        catch
+        {
+            Debug.Log("No data in the cloud");
+        }
         // when there is no data in the cloud
 
     }
@@ -35,7 +40,7 @@ public static class DataCalculator
         if(metadata == null)
         {
             // when there is no data in the cloud
-            metadata = new DataInfo(getseconds(data.data), 1, 1);
+            metadata = new DataInfo(getseconds(data.data), 0, 1);
         }
         Debug.Log("Pushing data to the cloud");
         metadata.addData(data);

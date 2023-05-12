@@ -55,8 +55,12 @@ public static class DataContoller
     {   
         // Set Pointer to current data
         int pointer;
-        if(DataList.keyarr == null) pointer = 0;
-        else                        pointer = int.Parse(DataList.enddatakey());
+        if(DataList.keyarr == null){
+            pointer = 0;
+            DataList.keyarr = new List<string>();
+        }else{
+            pointer = int.Parse(DataList.enddatakey());
+        }
 
         data.before = pointer;
 
@@ -64,7 +68,7 @@ public static class DataContoller
         data.SetKey = pointer.ToString();
 
         // Add to DataList
-        DataList.AddData(data);
+        await Task.WhenAll(DataList.AddData(data));
         if(DataList.keyarr.Count < 5){
             DataList.keyarr.Add(data.SetKey);
         }
@@ -94,7 +98,7 @@ public static class DataContoller
             // Add the data to the DataList
             for(int i = 0; i < keyarray.Count; i++){
             var data = query[keyarray[i]];
-            DataList.AddData(JsonConvert.DeserializeObject<Data>(data));
+            await Task.WhenAll(DataList.AddData(JsonConvert.DeserializeObject<Data>(data)));
             }
         }catch(KeyNotFoundException){
             Debug.Log("No data");
@@ -134,21 +138,27 @@ public static class DataContoller
             Data data = JsonConvert.DeserializeObject<Data>(query[DataList.Datalist[DataList.keyarr[0]].before.ToString()]);
 
             // Add data to DataList
-            DataList.AddData(data);
+            await Task.WhenAll(DataList.AddData(data));
 
             // Add data key to keyarr
             DataList.keyarr.Insert(0, data.SetKey);
 
+            // push key to arr
+            var pushkey = new Dictionary<string, object>{ { "key", DataList.DataKeys() } };
+            await CloudSaveService.Instance.Data.ForceSaveAsync(pushkey);
+
         }catch(KeyNotFoundException){
+            // when there is no previous data to pull but you want to delete
+            await CloudSaveService.Instance.Data.ForceDeleteAsync("key");
             Debug.Log("No data");
+        }catch(ArgumentOutOfRangeException){
+            await CloudSaveService.Instance.Data.ForceDeleteAsync("key");
+            Debug.Log("Index is out of range");
         }
 
         // push key to arr
-        var pushkey = new Dictionary<string, object>{ { "key", DataList.DataKeys() } };
-        await CloudSaveService.Instance.Data.ForceSaveAsync(pushkey);
+        } 
     }
-
-}
 
 // Manages and saves the data
 public static class DataList
@@ -160,7 +170,7 @@ public static class DataList
     // List of keys
     public static List<string> keyarr;
 
-    public static void AddData(Data data)
+    public static Task AddData(Data data)
     {
         const int INITIAL_INDEX = 0;
         const int LAST_INDEX = 4;
@@ -176,9 +186,11 @@ public static class DataList
             }
             
             DataList.keyarr[LAST_INDEX] = data.SetKey;
+            return Task.CompletedTask;
         }
         
         DataList.Datalist.Add(data.SetKey, data);
+        return Task.CompletedTask;
     }
 
     public static string DataKeys() // return the keys of the data as string
@@ -189,7 +201,12 @@ public static class DataList
             keys += DataList.Datalist[DataList.keyarr[i]].SetKey + ",";
         }
 
-        keys = keys.Remove(keys.Length - 1, 1);
+        try{
+            keys = keys.Remove(keys.Length - 1, 1);
+        }catch(ArgumentOutOfRangeException){
+            //Delete Data on cloud
+            Debug.Log("No Keys");
+        }
         return keys;
     }
 
