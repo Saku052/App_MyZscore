@@ -20,6 +20,12 @@ public class AddingData : MonoBehaviour
         addDataPanel.SetActive(true);
     }
 
+    public void CloseDatapanel()
+    {
+        // Close the panel
+        addDataPanel.SetActive(false);
+    }
+
     public void inputCommentChanged()
     {
         // Get the input from the input field
