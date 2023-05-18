@@ -120,7 +120,7 @@ public static class DataContoller
         }catch(ArgumentOutOfRangeException){
             
             // if the data is the last data, do nothing
-            Debug.Log("Index is out of range");
+            Debug.Log("No next data");
         }
 
         // Delete data from DataList
@@ -148,11 +148,17 @@ public static class DataContoller
             await CloudSaveService.Instance.Data.ForceSaveAsync(pushkey);
 
         }catch(KeyNotFoundException){
-            // when there is no previous data to pull but you want to delete
-            await CloudSaveService.Instance.Data.ForceDeleteAsync("key");
-            Debug.Log("No data");
+            // push key to arr
+            var pushkey = new Dictionary<string, object>{ { "key", DataList.DataKeys() } };
+            await CloudSaveService.Instance.Data.ForceSaveAsync(pushkey);
+
+            // when there is no previous data to pull but you want to delete the data
+            Debug.Log("Number of data is less than 5");
         }catch(ArgumentOutOfRangeException){
+            // when the data is the very last data and you want to delete the key as well
             await CloudSaveService.Instance.Data.ForceDeleteAsync("key");
+            // delete the DataInfo as well
+            await CloudSaveService.Instance.Data.ForceDeleteAsync("DataInfo");
             Debug.Log("Index is out of range");
         }
 

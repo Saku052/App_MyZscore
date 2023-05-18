@@ -42,9 +42,8 @@ public static class DataCalculator
             // when there is no data in the cloud
             metadata = new DataInfo(getseconds(data.data), 0, 1);
         }
-        Debug.Log("Pushing data to the cloud");
         metadata.addData(data);
-        Debug.Log("Pushing data to the cloud2");     
+
         // push data info to the cloud
         var pushdata = new Dictionary<string, object>{ { "DataInfo", metadata } };
         await CloudSaveService.Instance.Data.ForceSaveAsync(pushdata);
@@ -117,12 +116,10 @@ public class DataInfo
 
         // calculate the new mean
         float datavalue = getseconds(data.data);
-        newmean = (mean * (count - 1) + datavalue) / count;
+        newmean = (this.mean * (count - 1) + datavalue) / count;
 
         // calculate the new sd through DataInfo constructor
         getsd(newmean, datavalue);
-
-        // push the new data to the cloud
         
     }
 
@@ -139,6 +136,9 @@ public class DataInfo
         MSR /= this.count; 
         // take the square root of the mean squared error
         this.sd = (float) Mathf.Sqrt(MSR);
+
+        // update the mean
+        this.mean = mean;
     }
 
     private void calculateSDSP(float newmean, float datavalue)
