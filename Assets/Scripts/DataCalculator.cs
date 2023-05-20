@@ -49,6 +49,21 @@ public static class DataCalculator
         await CloudSaveService.Instance.Data.ForceSaveAsync(pushdata);
     }
 
+    public async static Task DeleteMetadata(string key)
+    {
+        // change key into data object
+        int inext = DataList.keyarr.IndexOf(key);
+        Data data = DataList.Datalist[DataList.keyarr[inext]];
+        
+        // change the metadata info 
+        metadata.deleteData(data);
+
+        // push data info to the cloud
+        var pushdata = new Dictionary<string, object>{ { "DataInfo", metadata } };
+        await CloudSaveService.Instance.Data.ForceSaveAsync(pushdata);
+
+    }
+
     private static float getseconds(string data) // convert the data to seconds
     {
         // split the data into minutes, and seconds
@@ -121,6 +136,21 @@ public class DataInfo
         // calculate the new sd through DataInfo constructor
         getsd(newmean, datavalue);
         
+    }
+
+    public void deleteData(Data data)
+    {
+        Debug.Log("Deleting data");
+        // subtract count
+        this.count--;
+        float newmean;
+
+        // calculate the new mean
+        float datavalue = getseconds(data.data);
+        newmean = (this.mean * (count + 1) - datavalue) / count;
+
+        // calculate the new sd through DataInfo constructor
+        getsd(newmean, datavalue);
     }
 
     private void calculateSD(float mean) // calculate the sd

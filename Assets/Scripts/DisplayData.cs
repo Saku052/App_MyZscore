@@ -61,6 +61,7 @@ public class DisplayData : MonoBehaviour
         GameObject button_ob = eventSystem.currentSelectedGameObject;
 
         // Delete data from the cloud
+        await Task.WhenAll(DataCalculator.DeleteMetadata(button_ob.transform.parent.name));
         await Task.WhenAll(DataContoller.DeleteData(button_ob.transform.parent.name));
 
         // Delete all data displayed

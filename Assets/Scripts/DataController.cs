@@ -159,6 +159,8 @@ public static class DataContoller
             await CloudSaveService.Instance.Data.ForceDeleteAsync("key");
             // delete the DataInfo as well
             await CloudSaveService.Instance.Data.ForceDeleteAsync("DataInfo");
+            // delete instance of keyarr
+            DataList.keyarr = null;
             Debug.Log("Index is out of range");
         }
 
