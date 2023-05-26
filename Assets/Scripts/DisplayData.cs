@@ -12,6 +12,8 @@ public class DisplayData : MonoBehaviour
     [SerializeField] private GameObject dataPrefab; // prefab for displaying data
     [SerializeField] private GameObject newData;    // GameObject for adding new data
     [SerializeField] private Transform dataParent;  // parent of the data
+    
+    [SerializeField] private GameObject loadPanel;  // panel for loading data
 
     // make an instance of this class
     public static DisplayData instance;
@@ -28,6 +30,9 @@ public class DisplayData : MonoBehaviour
 
         // Display the data pulled
         DisplayDataList();
+
+        // Close the loading panel
+        loadPanel.SetActive(false);
     }
 
     public void DisplayDataList()  // Display the data pulled
@@ -56,6 +61,9 @@ public class DisplayData : MonoBehaviour
 
     public async void DeleteData()  // Delete data when button pressed
     {
+        // Show loading panel
+        loadPanel.SetActive(true);
+
         // Get pressed button object
         eventSystem=EventSystem.current;
         GameObject button_ob = eventSystem.currentSelectedGameObject;
@@ -70,6 +78,9 @@ public class DisplayData : MonoBehaviour
 
         //Display the data again
         DisplayDataList();
+
+        // Close the loading panel
+        loadPanel.SetActive(false);
 
         Debug.Log("Data deleted");
     }

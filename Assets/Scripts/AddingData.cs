@@ -12,6 +12,8 @@ public class AddingData : MonoBehaviour
     [SerializeField] private InputField inputComment;  // input field for comment
     [SerializeField] private GameObject addDataPanel;// panel for adding data
 
+    [SerializeField] private GameObject loadPanel;  // panel for loading data
+
     public static AddingData instance;  // make an instance of this class
 
     public void OpenDataPanel()
@@ -48,6 +50,9 @@ public class AddingData : MonoBehaviour
 
     public void UploadData()
     {
+        // show panel when data is uplading
+        loadPanel.SetActive(true);
+
         // Get the time to be uploaded
         DateTime TodayTime = DateTime.Now;
         string Today = TodayTime.ToString("yyyy/MM/dd");
@@ -55,6 +60,8 @@ public class AddingData : MonoBehaviour
         // Get the data to be uploaded
         string data = dropMinutes.options[dropMinutes.value].text +"分" +
                         dropSeconds.options[dropSeconds.value].text + "秒";
+                        
+        addDataPanel.SetActive(false);
 
         // Upload the data
         Task.WhenAll(
@@ -65,6 +72,10 @@ public class AddingData : MonoBehaviour
         
         //Display the data again
         DisplayData.instance.DisplayDataList();
+
+        // Close the panel
+        loadPanel.SetActive(false);
+        addDataPanel.SetActive(false);
 
         Debug.Log("Data uploaded");
     }
