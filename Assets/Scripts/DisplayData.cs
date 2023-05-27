@@ -47,6 +47,7 @@ public class DisplayData : MonoBehaviour
                 GameObject data = Instantiate(dataPrefab, dataParent);
                 data.transform.Find("DataComment").GetComponent<Text>().text = DataList.Datalist[DataList.keyarr[i]].comment;
                 data.transform.Find("DataValue").GetComponent<Text>().text = DataList.Datalist[DataList.keyarr[i]].data;
+                data.transform.Find("DataScore").GetComponent<Text>().text = DataCalculator.metadata.getZscore(DataList.Datalist[DataList.keyarr[i]]);
                 data.transform.Find("DataDelBut").GetComponent<Button>().onClick.AddListener(() => DeleteData());
                 data.transform.name = DataList.keyarr[i];
             }

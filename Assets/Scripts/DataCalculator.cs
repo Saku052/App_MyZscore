@@ -54,7 +54,7 @@ public static class DataCalculator
         // change key into data object
         int inext = DataList.keyarr.IndexOf(key);
         Data data = DataList.Datalist[DataList.keyarr[inext]];
-        
+
         // change the metadata info 
         metadata.deleteData(data);
 
@@ -104,6 +104,18 @@ public class DataInfo
 
         // just testing if it works
         calculateSD(mean);  
+    }
+
+    // get Zscore
+    public string getZscore(Data data)
+    {
+        // get the data in seconds
+        float datavalue = getseconds(data.data);
+
+        // calculate the Zscore
+        float Zscore = (((datavalue - this.mean) * 10 )/ this.sd) + 50;
+
+        return Zscore.ToString("F2");
     }
 
     private void getsd(float newmean, float datavalue)
