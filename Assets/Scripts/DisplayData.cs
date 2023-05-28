@@ -15,6 +15,8 @@ public class DisplayData : MonoBehaviour
     
     [SerializeField] private GameObject loadPanel;  // panel for loading data
 
+    [SerializeField] private GameObject infoPanel;  // panel for displaying data
+
     // make an instance of this class
     public static DisplayData instance;
 
@@ -54,6 +56,9 @@ public class DisplayData : MonoBehaviour
         }catch(System.NullReferenceException){
             Debug.Log("No data");
         }
+
+        // show mean of data
+        infoPanel.transform.Find("Mean").GetComponent<Text>().text = DataCalculator.metadata.getminseconds(DataCalculator.metadata.mean);
 
         // Display GameObject for adding new data at the end
         GameObject addingData = Instantiate(newData, dataParent);

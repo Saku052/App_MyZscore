@@ -211,4 +211,13 @@ public class DataInfo
 
         return seconds;
     }
+
+    public string getminseconds(float seconds) // convert the data to minutes and seconds
+    {
+        // convert to minutes and seconds
+        float minutes = Mathf.Floor(seconds / 60);
+        seconds = seconds % 60;
+
+        return minutes.ToString("F0") + "分" + seconds.ToString("F0") + "秒";
+    }
 }

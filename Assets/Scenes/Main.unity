@@ -2392,7 +2392,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00012207031}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0.6665}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &803043462
@@ -4394,7 +4394,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u30C7\u30FC\u30BF\u306E\u540D\u524D"
+  m_Text: "\u5165\u529B\u30C7\u30FC\u30BF"
 --- !u!222 &1573331845
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5866,6 +5866,7 @@ MonoBehaviour:
   newData: {fileID: 1548026713951249051, guid: bffb31c2f34f5db47a4e2372214e3dba, type: 3}
   dataParent: {fileID: 427996259}
   loadPanel: {fileID: 949534694}
+  infoPanel: {fileID: 1878758160}
 --- !u!114 &1978506236
 MonoBehaviour:
   m_ObjectHideFlags: 0
