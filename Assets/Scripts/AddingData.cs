@@ -60,7 +60,7 @@ public class AddingData : MonoBehaviour
         // Get the data to be uploaded
         string data = dropMinutes.options[dropMinutes.value].text +"分" +
                         dropSeconds.options[dropSeconds.value].text + "秒";
-                        
+
         addDataPanel.SetActive(false);
 
         // Upload the data

@@ -52,13 +52,14 @@ public class DisplayData : MonoBehaviour
                 data.transform.Find("DataScore").GetComponent<Text>().text = DataCalculator.metadata.getZscore(DataList.Datalist[DataList.keyarr[i]]);
                 data.transform.Find("DataDelBut").GetComponent<Button>().onClick.AddListener(() => DeleteData());
                 data.transform.name = DataList.keyarr[i];
+                
+                // show mean of data
+                infoPanel.transform.Find("Mean").GetComponent<Text>().text = DataCalculator.metadata.getminseconds(DataCalculator.metadata.mean);
             }
         }catch(System.NullReferenceException){
             Debug.Log("No data");
         }
 
-        // show mean of data
-        infoPanel.transform.Find("Mean").GetComponent<Text>().text = DataCalculator.metadata.getminseconds(DataCalculator.metadata.mean);
 
         // Display GameObject for adding new data at the end
         GameObject addingData = Instantiate(newData, dataParent);

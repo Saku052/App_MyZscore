@@ -34,7 +34,6 @@ public class Data   // Data class
 }
 
 
-
 // push and pull data from the cloud
 public static class DataContoller
 {
@@ -71,6 +70,8 @@ public static class DataContoller
         await Task.WhenAll(DataList.AddData(data));
         if(DataList.keyarr.Count < 5){
             DataList.keyarr.Add(data.SetKey);
+        }else{
+            DataList.keyarr[4] = data.SetKey;
         }
 
         // Push the data to the cloud
@@ -182,10 +183,12 @@ public static class DataList
     {
         const int INITIAL_INDEX = 0;
         const int LAST_INDEX = 4;
+        Debug.Log("Add data: " + data.SetKey);
 
         // if the list is full, remove the oldest data
         if(DataList.Datalist.Count > 4)
         {
+            
             DataList.Datalist.Remove(DataList.keyarr[INITIAL_INDEX]);
 
             for(int i = 0; i < DataList.keyarr.Count - 1; i++)
@@ -194,8 +197,8 @@ public static class DataList
             }
             
             DataList.keyarr[LAST_INDEX] = data.SetKey;
-            return Task.CompletedTask;
         }
+        Debug.Log("Add data1: " + data.SetKey);
         
         DataList.Datalist.Add(data.SetKey, data);
         return Task.CompletedTask;
