@@ -20,7 +20,7 @@ public class Data   // Data class
     public string date {get; set;}
     public string comment {get; set;}
     public int before {get; set;}
-
+    public string keyname = "keyarr1";
     public Data(){}   // Constructor when pulling data from the cloud
 
     public Data(string data, string date, string comment)   // Constructor when adding new data
@@ -79,7 +79,7 @@ public static class DataContoller
         await CloudSaveService.Instance.Data.ForceSaveAsync(pushdata);
 
         // Push the pointer to the cloud
-        var pushkey = new Dictionary<string, object>{ { "key", DataList.DataKeys() } };
+        var pushkey = new Dictionary<string, object>{ { "keyarr1", DataList.DataKeys() } };
         await CloudSaveService.Instance.Data.ForceSaveAsync(pushkey);
     }
 
@@ -88,8 +88,8 @@ public static class DataContoller
     {   
         try{
             // Pull Key data from the cloud
-            var keyquery =  await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { "key" });
-            List<string> keyarray = DataList.getKeys(keyquery["key"]);
+            var keyquery =  await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { "keyarr1" });
+            List<string> keyarray = DataList.getKeys(keyquery["keyarr1"]);
             
             // Pull the data from the cloud
             var pulllist = new HashSet<string>();
@@ -145,19 +145,19 @@ public static class DataContoller
             DataList.keyarr.Insert(0, data.SetKey);
 
             // push key to arr
-            var pushkey = new Dictionary<string, object>{ { "key", DataList.DataKeys() } };
+            var pushkey = new Dictionary<string, object>{ { "keyarr1", DataList.DataKeys() } };
             await CloudSaveService.Instance.Data.ForceSaveAsync(pushkey);
 
         }catch(KeyNotFoundException){
             // push key to arr
-            var pushkey = new Dictionary<string, object>{ { "key", DataList.DataKeys() } };
+            var pushkey = new Dictionary<string, object>{ { "keyarr1", DataList.DataKeys() } };
             await CloudSaveService.Instance.Data.ForceSaveAsync(pushkey);
 
             // when there is no previous data to pull but you want to delete the data
             Debug.Log("Number of data is less than 5");
         }catch(ArgumentOutOfRangeException){
             // when the data is the very last data and you want to delete the key as well
-            await CloudSaveService.Instance.Data.ForceDeleteAsync("key");
+            await CloudSaveService.Instance.Data.ForceDeleteAsync("keyarr1");
             // delete the DataInfo as well
             await CloudSaveService.Instance.Data.ForceDeleteAsync("DataInfo");
             // delete instance of keyarr
