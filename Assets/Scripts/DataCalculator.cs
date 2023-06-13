@@ -185,8 +185,6 @@ public class DataInfo
 
     private void calculateSDSP(float newmean, float datavalue)
     {
-        // the difference between the new mean and the old mean
-        float difference = Mathf.Abs(newmean - this.mean) + 1;
 
         // calculate the ratio of count
         float ratio = ((float)this.count-1) / this.count;
@@ -195,7 +193,8 @@ public class DataInfo
         float newMSR = Mathf.Pow((datavalue - newmean), 2) / this.count;
 
         // calculate the new sd
-        this.sd = Mathf.Sqrt((ratio * difference * Mathf.Pow(this.sd, 2)) + newMSR);
+        this.sd = Mathf.Sqrt((ratio * Mathf.Pow(this.sd, 2)) + newMSR);
+
         // update the mean
         this.mean = newmean;
     }

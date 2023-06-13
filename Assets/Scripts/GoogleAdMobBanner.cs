@@ -42,8 +42,8 @@ public class GoogleAdMobBanner : MonoBehaviour
             DestroyAd();
         }
 
-        // Create a 320x100 banner at top of the screen (can be 320x50 also)
-        AdSize adSize = new AdSize(320, 100);
+        // Create a 320x100 banner at bo55om of the screen (can be 320x50 also)
+        AdSize adSize = new AdSize(320, 50);
         _bannerView = new BannerView(_adUnitId, adSize, AdPosition.Bottom);
     }
 
