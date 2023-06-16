@@ -40,6 +40,16 @@ planing strategy
 
 ## Design
 
+For UI design, I have kept simple by using light green and gray color to empathise the theme of simpleness.
+
+![フィーチャーグラフィック](https://github.com/Saku052/App_MyZscore/assets/92529068/2569551e-e8fb-43af-b798-e6669a225293)
+
+As this application aims to improve users productivity, I have made the icon of the app simple as possible. It only uses the color used in the application, light green and gray. to make the icon not too simple but more futureistic, I have added shadows and lighting to the bars to make the bars 3D.
+
+![アプリアイコン1](https://github.com/Saku052/App_MyZscore/assets/92529068/9c3bf4ee-f7f6-4fbd-b2f0-52ad1ea5dba3)
+
+**[⬆ back to top](#table-of-contents)**
+
 ## Algorithm
 
 ## Update
