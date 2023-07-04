@@ -21,6 +21,8 @@ public class Data   // Data class
     public string comment {get; set;}
     public int before {get; set;}
     public string keyname = "keyarr1";
+
+    public readonly int MAX_DATA = 15;
     public Data(){}   // Constructor when pulling data from the cloud
 
     public Data(string data, string date, string comment)   // Constructor when adding new data
@@ -68,10 +70,10 @@ public static class DataContoller
 
         // Add to DataList
         await Task.WhenAll(DataList.AddData(data));
-        if(DataList.keyarr.Count < 5){
+        if(DataList.keyarr.Count < data.MAX_DATA){
             DataList.keyarr.Add(data.SetKey);
         }else{
-            DataList.keyarr[4] = data.SetKey;
+            DataList.keyarr[data.MAX_DATA-1] = data.SetKey;
         }
 
         // Push the data to the cloud
@@ -154,7 +156,7 @@ public static class DataContoller
             await CloudSaveService.Instance.Data.ForceSaveAsync(pushkey);
 
             // when there is no previous data to pull but you want to delete the data
-            Debug.Log("Number of data is less than 5");
+            Debug.Log("Number of data is less than 15");
         }catch(ArgumentOutOfRangeException){
             // when the data is the very last data and you want to delete the key as well
             await CloudSaveService.Instance.Data.ForceDeleteAsync("keyarr1");
@@ -173,7 +175,7 @@ public static class DataContoller
 public static class DataList
 {
     // List of Data class
-    // Max count is 5
+    // Max count is Data.MAX_DATA
     public static Dictionary<string, Data> Datalist = new Dictionary<string, Data>(); 
 
     // List of keys
@@ -182,11 +184,10 @@ public static class DataList
     public static Task AddData(Data data)
     {
         const int INITIAL_INDEX = 0;
-        const int LAST_INDEX = 4;
         Debug.Log("Add data: " + data.SetKey);
 
         // if the list is full, remove the oldest data
-        if(DataList.Datalist.Count > 4)
+        if(DataList.Datalist.Count > data.MAX_DATA - 1)
         {
             
             DataList.Datalist.Remove(DataList.keyarr[INITIAL_INDEX]);
@@ -196,7 +197,7 @@ public static class DataList
                 DataList.keyarr[i] = DataList.keyarr[i + 1];
             }
             
-            DataList.keyarr[LAST_INDEX] = data.SetKey;
+            DataList.keyarr[data.MAX_DATA - 1] = data.SetKey;
         }
         Debug.Log("Add data1: " + data.SetKey);
         

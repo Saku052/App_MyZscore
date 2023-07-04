@@ -120,8 +120,8 @@ public class DataInfo
 
     private void getsd(float newmean, float datavalue)
     {
-        // calculate the sd
-        if(count < 6)   // when there is less than 6 data
+        // calculate the sd 
+        if(count < 16)   // when there is less than 6 data
         {
             // calculate sd normally
             calculateSD(newmean);

@@ -19,6 +19,7 @@ public class GoogleAdMobBanner : MonoBehaviour
     }
 
     // These ad units are configured to always serve test ads.
+    // ca-app-pub-3940256099942544/6300978111
     #if UNITY_ANDROID
     private string _adUnitId = "ca-app-pub-3940256099942544/6300978111";
     #elif UNITY_IPHONE

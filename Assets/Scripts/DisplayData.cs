@@ -54,7 +54,7 @@ public class DisplayData : MonoBehaviour
                 data.transform.name = DataList.keyarr[i];
 
                 // show mean of data
-                infoPanel.transform.Find("Mean").GetComponent<Text>().text = DataCalculator.metadata.getminseconds(DataCalculator.metadata.mean);
+                infoPanel.transform.Find("Mean").GetComponent<Text>().text = "平均 | "+ DataCalculator.metadata.getminseconds(DataCalculator.metadata.mean);
             }
         }catch(System.NullReferenceException){
             Debug.Log("No data");
