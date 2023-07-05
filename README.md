@@ -30,13 +30,13 @@ When comparing data with several data, simple difference from the mean would not
 
 ・users have to manuary input their own data
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#table-of-content)**
 
 ## Strategy
 
 planing strategy
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#table-of-content)**
 
 ## Design
 
@@ -48,7 +48,7 @@ As this application aims to improve users productivity, I have made the icon of 
 
 ![アプリアイコン1](https://github.com/Saku052/App_MyZscore/assets/92529068/9c3bf4ee-f7f6-4fbd-b2f0-52ad1ea5dba3)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#table-of-content)**
 
 ## Algorithm
 
@@ -56,6 +56,6 @@ As this application aims to improve users productivity, I have made the icon of 
 
 No update
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#table-of-content)**
 
 
