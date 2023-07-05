@@ -199,7 +199,7 @@ public class DataInfo
         this.mean = newmean;
     }
 
-    private float getseconds(string data) // convert the data to seconds
+    public float getseconds(string data) // convert the data to seconds
     {
         // split the data into minutes, and seconds
         string[] split = data.Split('分');
@@ -214,9 +214,15 @@ public class DataInfo
     public string getminseconds(float seconds) // convert the data to minutes and seconds
     {
         // convert to minutes and seconds
-        float minutes = Mathf.Floor(seconds / 60);
-        seconds = seconds % 60;
+        float minutes;
+        if(seconds < 0)
+            minutes = Mathf.Ceil(seconds / 60);
+        else
+            minutes = Mathf.Floor(seconds / 60);
 
+        seconds = Mathf.Abs(seconds % 60);
+        
+        Debug.Log(minutes);
         return minutes.ToString("F0") + "分" + seconds.ToString("F0") + "秒";
     }
 }

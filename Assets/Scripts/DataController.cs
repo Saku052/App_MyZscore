@@ -184,7 +184,6 @@ public static class DataList
     public static Task AddData(Data data)
     {
         const int INITIAL_INDEX = 0;
-        Debug.Log("Add data: " + data.SetKey);
 
         // if the list is full, remove the oldest data
         if(DataList.Datalist.Count > data.MAX_DATA - 1)
@@ -199,7 +198,6 @@ public static class DataList
             
             DataList.keyarr[data.MAX_DATA - 1] = data.SetKey;
         }
-        Debug.Log("Add data1: " + data.SetKey);
         
         DataList.Datalist.Add(data.SetKey, data);
         return Task.CompletedTask;

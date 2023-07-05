@@ -81,9 +81,4 @@ public class GoogleAdMobBanner : MonoBehaviour
         }
     }
 
-    public void OpenBrowser()
-    {
-        Application.OpenURL("https://special-chimpanzee-20a.notion.site/GooglePlay-83b6558362f946c6b6f5b2ac529975ac?pvs=4");
-    }
-
 }
