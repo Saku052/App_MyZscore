@@ -40,21 +40,24 @@ planing strategy
 
 ## Design
 
-For UI design, I have kept simple by using light green and gray color to empathise the theme of simpleness.
+For the UX・UI design I wanted to make the entire theme very simple and easy to understand. Therefore, I chose the color blue for the main theme and red for caution and for something negative. 
 
-![フィーチャーグラフィック](https://github.com/Saku052/App_MyZscore/assets/92529068/2569551e-e8fb-43af-b798-e6669a225293)
+![フィーチャーグラフィック](https://github.com/Saku052/App_MyZscore/assets/92529068/8f631364-2dcd-4105-9512-7b64b8528132)
 
-As this application aims to improve users productivity, I have made the icon of the app simple as possible. It only uses the color used in the application, light green and gray. to make the icon not too simple but more futureistic, I have added shadows and lighting to the bars to make the bars 3D.
 
-![アプリアイコン1](https://github.com/Saku052/App_MyZscore/assets/92529068/9c3bf4ee-f7f6-4fbd-b2f0-52ad1ea5dba3)
+As this application aims to improve users productivity, I have made the icon of the app simple as possible. It only uses the color used in the application, blue and gray. to make the icon not too simple but more futuristic, I have addded some gradation on a magnifyong glass
+
+![HensachiIcon512](https://github.com/Saku052/App_MyZscore/assets/92529068/6044f74e-7bbc-4c58-a1f1-42535832e0eb)
+
 
 **[⬆ back to top](#table-of-content)**
 
-## Algorithm
 
 ## Update
 
-No update
+**Ver1.1**
+update on UI design
+
 
 **[⬆ back to top](#table-of-content)**
 
